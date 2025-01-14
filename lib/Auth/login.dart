@@ -260,6 +260,7 @@ class _HomepageState extends State<Homepage> {
 
                         if(User != null){
                           Get.snackbar("", 'Signed in as ${User.displayName}');
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> Postscreen()));
                         }
                         else{
                           Get.snackbar('Error', 'SignIn is failed');

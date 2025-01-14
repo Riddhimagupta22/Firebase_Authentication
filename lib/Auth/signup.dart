@@ -1,11 +1,13 @@
-import 'dart:developer';
 
 import 'package:firebase/Auth/login.dart';
 import 'package:firebase/feature/roundbutton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../Post/postscreen.dart';
 import '../feature/utils.dart';
+import '../services/auth_services.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -15,6 +17,7 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final  googleSignInDevices = GooglesignwithDevices();
   bool loading = false;
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
@@ -235,29 +238,17 @@ class _SignupState extends State<Signup> {
                   SizedBox(
                     height: size.height * .009,
                   ),
-                  Container(
-                    height: size.width * .132,
-                    width: size.width * .69,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(24))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        // CircleAvatar(
-                        //   backgroundImage: AssetImage(
-                        //       "images/googlelogo.jpg"),
-                        // ),
-                        Text(
-                          "Sign Up With Gmail",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
-                        )
-                      ],
-                    ),
-                  )
+                  ElevatedButton(onPressed: () async {
+                    final User = await googleSignInDevices.signUpwithGmail();
+
+                    if(User != null){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Postscreen()));
+                      Get.snackbar("", 'Signed in as ${User.displayName}');
+                    }
+                    else{
+                      Get.snackbar('Error', 'SignIn is failed');
+                    }
+                  }, child: Text("Sign Up with Gmail"))
                 ],
               ),
           ),
