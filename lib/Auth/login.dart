@@ -262,7 +262,7 @@ class _HomepageState extends State<Homepage> {
                           Get.snackbar("", 'Signed in as ${User.displayName}');
                         }
                         else{
-                          Get.snackbar('title', 'SignIn is failed');
+                          Get.snackbar('Error', 'SignIn is failed');
                         }
                         }, child: Text("Sign Up with Gmail"))
                        
