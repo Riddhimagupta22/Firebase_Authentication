@@ -1,10 +1,14 @@
 import 'package:firebase/Auth/signup.dart';
 import 'package:firebase/Post/postscreen.dart';
 import 'package:firebase/feature/roundbutton.dart';
+import 'package:firebase/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 import '../feature/utils.dart';
+import '../services/auth_services.dart';
 
 class Homepage extends StatefulWidget {
   @override
@@ -12,6 +16,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final  googleSignInDevices = GooglesignwithDevices();
   final _formField = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
   final emailController = TextEditingController();
@@ -22,7 +27,6 @@ class _HomepageState extends State<Homepage> {
     emailController.dispose();
     passwordController.dispose();
   }
-
   void login() {
 
     auth.signInWithEmailAndPassword(
@@ -228,29 +232,40 @@ class _HomepageState extends State<Homepage> {
                         SizedBox(
                           height: size.height * .03,
                         ),
-                        Container(
-                          height: size.width * .132,
-                          width: size.width * .69,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              // CircleAvatar(
-                              //   backgroundImage: AssetImage("image/googlelogo.jpg"),
-                              // ),
-                              Text(
-                                "Sign Up With Gmail",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
-                              )
-                            ],
-                          ),
-                        )
+                        // Container(
+                        //   height: size.width * .132,
+                        //   width: size.width * .69,
+                        //   decoration: BoxDecoration(
+                        //       color: Colors.white,
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(24))),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //     children: [
+                        //       // CircleAvatar(
+                        //       //   backgroundImage: AssetImage("image/googlelogo.jpg"),
+                        //       // ),
+                        //       Text(
+                        //         "Sign Up With Gmail",
+                        //         style: TextStyle(
+                        //             color: Colors.black,
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 15),
+                        //       )
+                        //     ],
+                        //   ),
+                        // )
+                        ElevatedButton(onPressed: () async {
+                        final User = await googleSignInDevices.signUpwithGmail();
+
+                        if(User != null){
+                          Get.snackbar("", 'Signed in as ${User.displayName}');
+                        }
+                        else{
+                          Get.snackbar('title', 'SignIn is failed');
+                        }
+                        }, child: Text("Sign Up with Gmail"))
+                       
                       ],
                     ),
                   ),

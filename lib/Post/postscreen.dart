@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 class Postscreen extends StatelessWidget {
 
-
-    
-
     @override
     Widget build(BuildContext context) {
       var size = MediaQuery.of(context).size;
